@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CourseInstructionYoutube</string>
+    <string name="web_client_id">425252177958-ftv5rh58ppml15pr24bg5ioqu25rnert.apps.googleusercontent.com</string>
+    <string name="youtube_api_key">AIzaSyCtjNhSkT1EJqnPEuCPAq0N-h_tv5Ne4Kc</string>
 </resources>

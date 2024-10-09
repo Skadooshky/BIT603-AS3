@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Base colors -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Light theme primary colors -->
+    <color name="colorPrimary">#6200EE</color> <!-- Deep Purple -->
+    <color name="colorPrimaryVariant">#3700B3</color> <!-- Dark Purple -->
+    <color name="colorOnPrimary">#FFFFFF</color> <!-- White text on primary -->
+
+    <!-- Secondary colors -->
+    <color name="colorSecondary">#03DAC6</color> <!-- Teal accent -->
+    <color name="colorSecondaryVariant">#018786</color> <!-- Dark Teal -->
+    <color name="colorOnSecondary">#000000</color> <!-- Black text on secondary -->
+
+    <!-- Background and surface colors -->
+    <color name="colorBackground">#FFFFFF</color> <!-- White background -->
+    <color name="colorSurface">#F5F5F5</color> <!-- Light Gray surface -->
+    <color name="colorOnBackground">#000000</color> <!-- Black text on background -->
+    <color name="colorOnSurface">#000000</color> <!-- Black text on surfaces -->
 </resources>

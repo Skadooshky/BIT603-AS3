@@ -1,0 +1,43 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- EditText for YouTube URL Input -->
+    <EditText
+        android:id="@+id/ytVideoUrlEt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="Enter YouTube Video URL"
+        android:inputType="text"
+        android:minHeight="48dp" />
+
+    <!-- Play Video Button -->
+    <Button
+        android:id="@+id/play_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Play Video"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"/>
+
+    <!-- YouTube Player View -->
+    <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+        android:id="@+id/youtube_player_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"/>
+
+    <!-- Back to List Button -->
+    <Button
+        android:id="@+id/back_to_list_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back to List"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"/>
+</LinearLayout>

@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Permissions -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,15 +16,29 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CourseInstructionYoutube"
         tools:targetApi="31">
+
+        <!-- MainActivity: The launcher activity (Login Activity) -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- AppMainActivity: The main app activity after login -->
+        <activity android:name=".AppMainActivity"
+            android:exported="true" />
+
+        <!-- YouTubePlayerActivity: Plays the selected YouTube video -->
+        <activity android:name=".YouTubePlayerActivity"
+            android:exported="true" />
+
+        <!-- YouTubeChannelListActivity: Lists YouTube channel videos -->
+        <activity android:name=".YouTubeChannelListActivity"
+            android:exported="true" />
+
     </application>
 
 </manifest>
