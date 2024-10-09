@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "425252177958",
+    "project_id": "bit603ass3-fd962",
+    "storage_bucket": "bit603ass3-fd962.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:425252177958:android:4832e5b604eb2b4c7ebee7",
+        "android_client_info": {
+          "package_name": "com.example.courseinstructionyoutube"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "425252177958-m9ujkvb0qjo7eh184q64mu5j8vj5ap5f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.courseinstructionyoutube",
+            "certificate_hash": "3d9c8bd60e8ec78a3b342c6349c00692c882bbd3"
+          }
+        },
+        {
+          "client_id": "425252177958-ftv5rh58ppml15pr24bg5ioqu25rnert.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3lfSTOGUg65b1Sy_sPjZVgpp02Pd7E8I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "425252177958-ftv5rh58ppml15pr24bg5ioqu25rnert.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
