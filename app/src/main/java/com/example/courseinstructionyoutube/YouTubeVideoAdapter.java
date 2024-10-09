@@ -17,61 +17,70 @@ import java.util.List;
 
 public class YouTubeVideoAdapter extends RecyclerView.Adapter<YouTubeVideoAdapter.VideoViewHolder> {
 
+    // List to store YouTube video data
     private final List<YouTubeVideosResponse.Item> videoList;
-    private final OnVideoClickListener onVideoClickListener;
+    private final OnVideoClickListener onVideoClickListener;  // Listener for video click events
     private final Context context;
 
-    // Interface for video click events
+    // Interface to handle video click events
     public interface OnVideoClickListener {
         void onVideoClick(String videoId);
     }
 
+    // Constructor to initialize the adapter with the context, video list, and click listener
     public YouTubeVideoAdapter(Context context, List<YouTubeVideosResponse.Item> videoList, OnVideoClickListener onVideoClickListener) {
         this.context = context;
         this.videoList = videoList;
         this.onVideoClickListener = onVideoClickListener;
     }
 
+    // Create new views (invoked by the layout manager)
     @NonNull
     @Override
     public VideoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // Inflate the custom layout for each video item
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.video_list_item, parent, false);
         return new VideoViewHolder(view);
     }
 
+    // Bind the data (title and thumbnail) to the view holder
     @Override
     public void onBindViewHolder(@NonNull VideoViewHolder holder, int position) {
-        YouTubeVideosResponse.Item video = videoList.get(position);
-        holder.videoTitle.setText(video.snippet.title);
+        YouTubeVideosResponse.Item video = videoList.get(position);  // Get the video item at the current position
+        holder.videoTitle.setText(video.snippet.title);  // Set the video title
 
-        // Check for null values before accessing fields and attempt to load different thumbnail sizes
+        // Load video thumbnail using Picasso, checking for available thumbnail sizes
         if (video.snippet != null && video.snippet.thumbnails != null) {
             if (video.snippet.thumbnails.high != null) {
                 Picasso.with(context).load(video.snippet.thumbnails.high.url).into(holder.videoThumbnail);
             } else if (video.snippet.thumbnails.medium != null) {
                 Picasso.with(context).load(video.snippet.thumbnails.medium.url).into(holder.videoThumbnail);
-            } else if (video.snippet.thumbnails._default != null) {  // Use _default here
+            } else if (video.snippet.thumbnails._default != null) {  // Use _default thumbnail if others are unavailable
                 Picasso.with(context).load(video.snippet.thumbnails._default.url).into(holder.videoThumbnail);
             } else {
-                holder.videoThumbnail.setImageResource(R.drawable.oplogoc);  // Default image
+                // Set a default image if no thumbnail is available
+                holder.videoThumbnail.setImageResource(R.drawable.oplogoc);
             }
         } else {
+            // Log a message if no thumbnail is found
             Log.d("YouTubeVideoAdapter", "No thumbnails available for video: " + video.snippet.title);
             holder.videoThumbnail.setImageResource(R.drawable.oplogoc);  // Default image
         }
 
+        // Set the click listener for the video item to open the video player
         holder.itemView.setOnClickListener(v -> onVideoClickListener.onVideoClick(video.id.videoId));
     }
 
-
+    // Return the size of the video list
     @Override
     public int getItemCount() {
         return videoList.size();
     }
 
+    // Provide a reference to the views for each data item
     public static class VideoViewHolder extends RecyclerView.ViewHolder {
-        public TextView videoTitle;
-        public ImageView videoThumbnail;
+        public TextView videoTitle;  // TextView to display the video title
+        public ImageView videoThumbnail;  // ImageView to display the video thumbnail
 
         public VideoViewHolder(@NonNull View itemView) {
             super(itemView);
