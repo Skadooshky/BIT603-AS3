@@ -3,7 +3,6 @@ package com.example.courseinstructionyoutube;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -52,6 +51,7 @@ public class YouTubePlayerActivity extends AppCompatActivity {
                     String videoUrl = videoUrlEditText.getText().toString().trim();
                     if (isValidYouTubeUrl(videoUrl)) {
                         String videoId = extractVideoId(videoUrl); // Extract the video ID from URL
+                        assert videoId != null;
                         youTubePlayer.loadVideo(videoId, 0); // Load the video in the player
                     } else {
                         Toast.makeText(YouTubePlayerActivity.this, "Invalid YouTube URL. Please enter a valid URL.", Toast.LENGTH_SHORT).show();

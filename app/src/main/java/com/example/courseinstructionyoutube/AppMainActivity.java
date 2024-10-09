@@ -10,8 +10,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class AppMainActivity extends AppCompatActivity {
 
-    // Declare buttons for different actions in the main app
-    private Button watchYouTubeVideoBtn, listYouTubeChannelBtn, signOutButton;
     // Firebase Authentication instance to manage user sign-in and sign-out
     private FirebaseAuth firebaseAuth;
 
@@ -22,9 +20,10 @@ public class AppMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_app_main);
 
         // Initialize buttons for the different features
-        watchYouTubeVideoBtn = findViewById(R.id.watchYouTubeVideoBtn);
-        listYouTubeChannelBtn = findViewById(R.id.listYouTubeChannelBtn);
-        signOutButton = findViewById(R.id.sign_out_button);
+        // Declare buttons for different actions in the main app
+        Button watchYouTubeVideoBtn = findViewById(R.id.watchYouTubeVideoBtn);
+        Button listYouTubeChannelBtn = findViewById(R.id.listYouTubeChannelBtn);
+        Button signOutButton = findViewById(R.id.sign_out_button);
 
         // Initialize Firebase Authentication to manage user session
         firebaseAuth = FirebaseAuth.getInstance();

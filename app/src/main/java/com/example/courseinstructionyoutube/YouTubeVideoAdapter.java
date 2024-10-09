@@ -20,7 +20,6 @@ public class YouTubeVideoAdapter extends RecyclerView.Adapter<YouTubeVideoAdapte
     // List to store YouTube video data
     private final List<YouTubeVideosResponse.Item> videoList;
     private final OnVideoClickListener onVideoClickListener;  // Listener for video click events
-    private final Context context;
 
     // Interface to handle video click events
     public interface OnVideoClickListener {
@@ -29,7 +28,6 @@ public class YouTubeVideoAdapter extends RecyclerView.Adapter<YouTubeVideoAdapte
 
     // Constructor to initialize the adapter with the context, video list, and click listener
     public YouTubeVideoAdapter(Context context, List<YouTubeVideosResponse.Item> videoList, OnVideoClickListener onVideoClickListener) {
-        this.context = context;
         this.videoList = videoList;
         this.onVideoClickListener = onVideoClickListener;
     }
@@ -52,17 +50,18 @@ public class YouTubeVideoAdapter extends RecyclerView.Adapter<YouTubeVideoAdapte
         // Load video thumbnail using Picasso, checking for available thumbnail sizes
         if (video.snippet != null && video.snippet.thumbnails != null) {
             if (video.snippet.thumbnails.high != null) {
-                Picasso.with(context).load(video.snippet.thumbnails.high.url).into(holder.videoThumbnail);
+                Picasso.get().load(video.snippet.thumbnails.high.url).into(holder.videoThumbnail);
             } else if (video.snippet.thumbnails.medium != null) {
-                Picasso.with(context).load(video.snippet.thumbnails.medium.url).into(holder.videoThumbnail);
+                Picasso.get().load(video.snippet.thumbnails.medium.url).into(holder.videoThumbnail);
             } else if (video.snippet.thumbnails._default != null) {  // Use _default thumbnail if others are unavailable
-                Picasso.with(context).load(video.snippet.thumbnails._default.url).into(holder.videoThumbnail);
+                Picasso.get().load(video.snippet.thumbnails._default.url).into(holder.videoThumbnail);
             } else {
                 // Set a default image if no thumbnail is available
                 holder.videoThumbnail.setImageResource(R.drawable.oplogoc);
             }
         } else {
             // Log a message if no thumbnail is found
+            assert video.snippet != null;
             Log.d("YouTubeVideoAdapter", "No thumbnails available for video: " + video.snippet.title);
             holder.videoThumbnail.setImageResource(R.drawable.oplogoc);  // Default image
         }
@@ -79,8 +78,8 @@ public class YouTubeVideoAdapter extends RecyclerView.Adapter<YouTubeVideoAdapte
 
     // Provide a reference to the views for each data item
     public static class VideoViewHolder extends RecyclerView.ViewHolder {
-        public TextView videoTitle;  // TextView to display the video title
-        public ImageView videoThumbnail;  // ImageView to display the video thumbnail
+        final TextView videoTitle;  // TextView to display the video title
+        final ImageView videoThumbnail;  // ImageView to display the video thumbnail
 
         public VideoViewHolder(@NonNull View itemView) {
             super(itemView);

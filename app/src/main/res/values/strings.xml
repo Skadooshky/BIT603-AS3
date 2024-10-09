@@ -1,5 +1,14 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">CourseInstructionYoutube</string>
     <string name="web_client_id">425252177958-ftv5rh58ppml15pr24bg5ioqu25rnert.apps.googleusercontent.com</string>
-    <string name="youtube_api_key">AIzaSyCtjNhSkT1EJqnPEuCPAq0N-h_tv5Ne4Kc</string>
+    <string name="youtube_api_key" tools:ignore="Typos">AIzaSyCtjNhSkT1EJqnPEuCPAq0N-h_tv5Ne4Kc</string>
+    <string name="logodesc">logo</string>
+    <string name="watch_a_youtube_video_btn">Watch a YouTube Video</string>
+    <string name="list_youtube_channel_videos_btn">List YouTube Channel Videos</string>
+    <string name="sign_out_btn">Sign Out</string>
+    <string name="enter_youtube_video_url_btn">Enter YouTube Video URL</string>
+    <string name="play_video_btn">Play Video</string>
+    <string name="enter_youtube_video_url_text">Youtube URL</string>
+    <string name="back_to_list_btn">Back to List</string>
+    <string name="thumbnail_text">thumbnail</string>
 </resources>

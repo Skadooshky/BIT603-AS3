@@ -10,7 +10,8 @@
         android:id="@+id/videoThumbnail"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginEnd="8dp" />
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/thumbnail_text" />
 
     <!-- Video title -->
     <TextView

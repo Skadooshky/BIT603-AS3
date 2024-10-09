@@ -4,10 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.IntentSenderRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.identity.BeginSignInRequest;
@@ -16,8 +16,6 @@ import com.google.android.gms.auth.api.identity.SignInClient;
 import com.google.android.gms.auth.api.identity.SignInCredential;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
@@ -25,6 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,6 +35,11 @@ public class MainActivity extends AppCompatActivity {
 
     // ActivityResultLauncher to handle the result of the sign-in request
     private ActivityResultLauncher<IntentSenderRequest> signInRequestLauncher;
+
+    private static void onFailure(Exception e) {
+        Log.d("FAILURE", "Sign-in failed");
+        e.printStackTrace();  // Log failure
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,24 +79,7 @@ public class MainActivity extends AppCompatActivity {
         // ActivityResultLauncher to handle the sign-in result
         signInRequestLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartIntentSenderForResult(),
-                result -> {
-                    if (result.getData() != null) {
-                        try {
-                            // Get the sign-in credential from the result data
-                            SignInCredential credential = oneTapClient
-                                    .getSignInCredentialFromIntent(result.getData());
-                            String idToken = credential.getGoogleIdToken();  // Retrieve ID token
-                            if (idToken != null) {
-                                firebaseAuthWithGoogle(idToken);  // Authenticate with Firebase using the Google ID token
-                            }
-                        } catch (ApiException e) {
-                            Log.d("API Exception", "Issue with sign-in");
-                            e.printStackTrace();  // Log the exception
-                        }
-                    } else {
-                        Log.d("RESULT", "No data found in the result.");
-                    }
-                });
+                this::onActivityResult);
     }
 
     // Method to handle sign-in click
@@ -105,10 +92,7 @@ public class MainActivity extends AppCompatActivity {
                             .build();
                     signInRequestLauncher.launch(intentSenderRequest);  // Launch the sign-in process
                 })
-                .addOnFailureListener(this, e -> {
-                    Log.d("FAILURE", "Sign-in failed");
-                    e.printStackTrace();  // Log failure
-                });
+                .addOnFailureListener(this, MainActivity::onFailure);
     }
 
     // Method to authenticate with Firebase using the Google ID token
@@ -137,12 +121,31 @@ public class MainActivity extends AppCompatActivity {
         Map<String, Object> userData = new HashMap<>();
         userData.put("name", user.getDisplayName());  // Add user's display name
         userData.put("email", user.getEmail());       // Add user's email
-        userData.put("profilePicture", user.getPhotoUrl().toString());  // Add user's profile picture URL
+        userData.put("profilePicture", Objects.requireNonNull(user.getPhotoUrl()).toString());  // Add user's profile picture URL
 
         // Save the data to the Firestore "users" collection
         db.collection("users").document(user.getUid())
                 .set(userData)
                 .addOnSuccessListener(aVoid -> Log.d("FIRESTORE", "User data successfully written!"))
                 .addOnFailureListener(e -> Log.d("FIRESTORE", "Error writing user data", e));  // Log any errors
+    }
+
+    private void onActivityResult(ActivityResult result) {
+        if (result.getData() != null) {
+            try {
+                // Get the sign-in credential from the result data
+                SignInCredential credential = oneTapClient
+                        .getSignInCredentialFromIntent(result.getData());
+                String idToken = credential.getGoogleIdToken();  // Retrieve ID token
+                if (idToken != null) {
+                    firebaseAuthWithGoogle(idToken);  // Authenticate with Firebase using the Google ID token
+                }
+            } catch (ApiException e) {
+                Log.d("API Exception", "Issue with sign-in");
+                e.printStackTrace();  // Log the exception
+            }
+        } else {
+            Log.d("RESULT", "No data found in the result.");
+        }
     }
 }

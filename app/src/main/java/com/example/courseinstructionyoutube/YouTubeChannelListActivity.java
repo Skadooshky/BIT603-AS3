@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -22,7 +24,6 @@ public class YouTubeChannelListActivity extends AppCompatActivity {
 
     // RecyclerView to display the list of videos
     private RecyclerView youtubeVideoRecyclerView;
-    private YouTubeVideoAdapter adapter;  // Adapter to manage the video list
     private List<YouTubeVideosResponse.Item> videoList;  // List to hold video data
     private YouTubeApiService apiService;  // Service to interact with YouTube API
 
@@ -37,7 +38,7 @@ public class YouTubeChannelListActivity extends AppCompatActivity {
 
         // Add dividers between list items
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-        dividerItemDecoration.setDrawable(ContextCompat.getDrawable(this, R.drawable.divider));  // Set custom drawable as divider
+        dividerItemDecoration.setDrawable(Objects.requireNonNull(ContextCompat.getDrawable(this, R.drawable.divider)));  // Set custom drawable as divider
         youtubeVideoRecyclerView.addItemDecoration(dividerItemDecoration);
 
         // Initialize the video list
@@ -66,9 +67,9 @@ public class YouTubeChannelListActivity extends AppCompatActivity {
         );
 
         // Handle API response asynchronously
-        call.enqueue(new Callback<YouTubeVideosResponse>() {
+        call.enqueue(new Callback<>() {
             @Override
-            public void onResponse(Call<YouTubeVideosResponse> call, Response<YouTubeVideosResponse> response) {
+            public void onResponse(@NonNull Call<YouTubeVideosResponse> call, @NonNull Response<YouTubeVideosResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     // If the response is successful, add videos to the list
                     videoList.addAll(response.body().items);
@@ -81,7 +82,7 @@ public class YouTubeChannelListActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<YouTubeVideosResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<YouTubeVideosResponse> call, @NonNull Throwable t) {
                 // Log any errors that occur during the API call
                 Log.e("YouTube API", "Error: " + t.getMessage());
             }
@@ -90,7 +91,8 @@ public class YouTubeChannelListActivity extends AppCompatActivity {
 
     // Method to set up RecyclerView with the video list
     private void setupRecyclerView() {
-        adapter = new YouTubeVideoAdapter(this, videoList, this::openYouTubePlayer);
+        // Adapter to manage the video list
+        YouTubeVideoAdapter adapter = new YouTubeVideoAdapter(this, videoList, this::openYouTubePlayer);
         youtubeVideoRecyclerView.setAdapter(adapter);
     }
 
@@ -113,9 +115,9 @@ public class YouTubeChannelListActivity extends AppCompatActivity {
         );
 
         // Handle API response asynchronously
-        call.enqueue(new Callback<YouTubeChannelResponse>() {
+        call.enqueue(new Callback<>() {
             @Override
-            public void onResponse(Call<YouTubeChannelResponse> call, Response<YouTubeChannelResponse> response) {
+            public void onResponse(@NonNull Call<YouTubeChannelResponse> call, @NonNull Response<YouTubeChannelResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     // Extract and display the channel name in the UI
                     String channelName = response.body().items.get(0).snippet.title;
@@ -127,7 +129,7 @@ public class YouTubeChannelListActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<YouTubeChannelResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<YouTubeChannelResponse> call, @NonNull Throwable t) {
                 // Log any errors during the API call
                 Log.e("YouTube API", "Error: " + t.getMessage());
             }

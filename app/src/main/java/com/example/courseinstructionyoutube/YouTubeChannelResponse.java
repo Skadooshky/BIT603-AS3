@@ -6,25 +6,24 @@ import java.util.List;
 public class YouTubeChannelResponse {
     public List<Item> items;
 
-    public class Item {
+    public static class Item {
         public Snippet snippet;
         public Statistics statistics;
 
-        public class Snippet {
+        public static class Snippet {
             public String title;
-            public String description;
             public Thumbnails thumbnails;
 
-            public class Thumbnails {
+            public static class Thumbnails {
                 public Default _default;
 
-                public class Default {
+                public static class Default {
                     public String url;
                 }
             }
         }
 
-        public class Statistics {
+        public static class Statistics {
             public String subscriberCount;
         }
     }

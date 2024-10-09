@@ -11,8 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:hint="Enter YouTube Video URL"
-        android:inputType="text"
+        android:autofillHints="video"
+        android:hint="@string/enter_youtube_video_url_text"
+        android:inputType="textUri"
         android:minHeight="48dp" />
 
     <!-- Play Video Button -->
@@ -20,7 +21,7 @@
         android:id="@+id/play_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Play Video"
+        android:text="@string/play_video_btn"
         android:layout_gravity="center"
         android:layout_marginBottom="20dp"/>
 
@@ -37,7 +38,7 @@
         android:id="@+id/back_to_list_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Back to List"
+        android:text="@string/back_to_list_btn"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"/>
 </LinearLayout>
